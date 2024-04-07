@@ -1,0 +1,45 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+import time
+import pytest
+
+# :Q6 בקוד זה אציג כניסה לאתר עם שם המשתמש והסיסמא, בחירת פריטים והסרתם מסל הקניות
+
+class TestRemoveItemsFunction:
+    def test_remove(self):
+        url = 'https://www.saucedemo.com/'
+        driver = webdriver.Chrome()
+        driver.maximize_window()
+        driver.get('https://www.saucedemo.com/')
+        time.sleep(3)
+
+        selectors = ['#user-name', '#password', '#login-button']
+        driver.find_element(By.CSS_SELECTOR, selectors[0]).send_keys('standard_user')
+        time.sleep(1)
+        driver.find_element(By.CSS_SELECTOR, selectors[1]).send_keys('secret_sauce')
+        time.sleep(1)
+        driver.find_element(By.CSS_SELECTOR, selectors[2]).click()
+        time.sleep(1)
+
+        product_1 = driver.find_element(By.CSS_SELECTOR,'#add-to-cart-sauce-labs-backpack').click()
+        time.sleep(2)
+        product_2= driver.find_element(By.CSS_SELECTOR,'#add-to-cart-sauce-labs-bike-light').click()
+        time.sleep(2)
+        actual = driver.find_element(By.CSS_SELECTOR, '#shopping_cart_container > a > span').click()
+        time.sleep(2)
+        actual = driver.find_element(By.CSS_SELECTOR, '#shopping_cart_container > a > span').text
+        time.sleep(2)
+
+
+    # def test_remove(self):
+    #     url = 'https://www.saucedemo.com/'
+    #     driver = webdriver.Chrome()
+    #     driver.maximize_window()
+    #     driver.get('https://www.saucedemo.com/')
+    #     time.sleep(3)
+        remove_product_1 = driver.find_element(By.CSS_SELECTOR, '#remove-sauce-labs-backpack').click()
+        time.sleep(2)
+        remove_product_2 = driver.find_element(By.CSS_SELECTOR, '#remove-sauce-labs-bike-light').click()
+        time.sleep(2)
+        actual = driver.find_element(By.CSS_SELECTOR, '#shopping_cart_container > a').text
+        time.sleep(2)
